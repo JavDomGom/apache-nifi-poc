@@ -45,6 +45,39 @@ services:
         networks:
             - internal
 
+    mysql:
+        container_name: mysql
+        image: mysql:8.0
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=db_test
+        ports:
+            - "3306:3306"
+        networks:
+            - internal
+
+    # app:
+    #     depends_on:
+    #         - "mysql"
+    #     container_name: flask-app
+    #     build:
+    #         context: ./app
+    #         dockerfile: Dockerfile
+    #     image: flask-app:latest
+    #     environment:
+    #         FLASK_ENV: development
+    #         DB_USER: root
+    #         DB_PASS: root
+    #         DB_HOST: mysql
+    #         DB_NAME: db_test
+    #         JWT_SECRET_KEY: v3rYsECur3
+    #     ports:
+    #         - "5000:5000"
+    #     restart: always
+    #     networks:
+    #         - internal
+
 volumes:
     nifi_data:
         driver: local
