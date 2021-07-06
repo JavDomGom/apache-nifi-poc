@@ -73,3 +73,4 @@ The consumer is left open waiting for new messages to come in. You can create al
 
 
 ## Apache NiFi
+If Apache NiFi has started successfully it will be available at the URL: http://localhost:8080/nifi

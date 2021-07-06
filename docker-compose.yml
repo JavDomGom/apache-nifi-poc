@@ -45,17 +45,17 @@ services:
         networks:
             - internal
 
-    mysql:
-        container_name: mysql
-        image: mysql:8.0
-        restart: always
-        environment:
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=db_test
-        ports:
-            - "3306:3306"
-        networks:
-            - internal
+    # mysql:
+    #     container_name: mysql
+    #     image: mysql:8.0
+    #     restart: always
+    #     environment:
+    #         - MYSQL_ROOT_PASSWORD=root
+    #         - MYSQL_DATABASE=db_test
+    #     ports:
+    #         - "3306:3306"
+    #     networks:
+    #         - internal
 
     # app:
     #     depends_on:
