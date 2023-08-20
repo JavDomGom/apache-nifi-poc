@@ -88,7 +88,7 @@ I have no name!@kafka:/$ kafka-topics.sh --list --bootstrap-server kafka:9092
 topic-nifi
 ```
 
-Ejecutamos un consumer para ver los mensajes que van entrando en el topic `topic-nifi`. esto dejará la sheel abierta:
+Ejecutamos un consumer para ver los mensajes que van entrando en el topic `topic-nifi`. esto dejará la shell abierta:
 ```commandline
 I have no name!@kafka:/$ kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic topic-nifi --from-beginning --group group-a
 ```
@@ -96,6 +96,7 @@ I have no name!@kafka:/$ kafka-console-consumer.sh --bootstrap-server kafka:9092
 ## Apache NiFi
 
 1. Entramos en el frontal de Apache NiFi desde un navegador en la URL: https://localhost:8443/nifi/
-2. Importamos la plantilla `poc-sftp2kafka.xml` y la abrimos. En el processor `GetSFTP` hay que establecer de nuevo la contraseña, ya que esta no se guarda al exportar la plantilla.
-3. Iniciamos todos los processors y empezaremos a ver cómo entran los primeros logs.
-4. Desde la shell del servicio `sftp` puedes ejecutar el script `./generate_log.sh` tantas veces como quieras, que irá generando logs en el archivo `test.log`, este estará disponible en el servidor SFTP y desde NiFi se ingestará. El resto de processors ya leerán solo las nuevas líneas.
+2. Pedirá credenciales, la tienes en el propio archivo `docker-compose.yml`, obviamente son credenciales para testing.
+3. Importamos la plantilla `poc-sftp2kafka.xml` y la abrimos. En el processor `GetSFTP` hay que establecer de nuevo la contraseña, ya que esta no se guarda al exportar la plantilla.
+4. Iniciamos todos los processors y empezaremos a ver cómo entran los primeros logs.
+5. Desde la shell del servicio `sftp` puedes ejecutar el script `./generate_log.sh` tantas veces como quieras, que irá generando logs en el archivo `test.log`, este estará disponible en el servidor SFTP y desde NiFi se ingestará. El resto de processors ya leerán solo las nuevas líneas.
