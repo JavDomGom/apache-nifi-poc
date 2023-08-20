@@ -1,0 +1,68 @@
+services:
+
+  kafka:
+    hostname: kafka
+    container_name: kafka
+    image: bitnami/kafka:latest
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LOG_CLEANER_DUP_DETECTION="true"
+      - KAFKA_LOG_CLEANER_ENABLE="true"
+      - KAFKA_LOG_CLEANER_BACKOFF_MS="15000"
+      - KAFKA_LOG_CLEANER_MAX_COMPACTION_LAG_MS="0"
+    volumes:
+      - "kafka_data:/bitnami"
+    networks:
+      poc-net:
+        ipv4_address: 10.40.0.10
+
+  nifi:
+    hostname: nifi
+    container_name: nifi
+    image: apache/nifi:latest
+    ports:
+      - "8443:8443"
+    volumes:
+      - "nifi_data:/nifi"
+    environment:
+      - SINGLE_USER_CREDENTIALS_USERNAME=admin
+      - SINGLE_USER_CREDENTIALS_PASSWORD=ctsBtRBKHRAx69EqUghvvgEvjnaLjFEB
+    networks:
+      poc-net:
+        ipv4_address: 10.40.0.20
+
+  sftp:
+    hostname: sftp
+    container_name: sftp
+    image: atmoz/sftp:latest
+    ports:
+      - "2222:22"
+    command: usutest:passwdtest:::upload
+    networks:
+      poc-net:
+        ipv4_address: 10.40.0.30
+
+volumes:
+  kafka_data:
+    name: kafka_data
+    driver: local
+  nifi_data:
+    name: nifi_data
+    driver: local
+
+networks:
+  poc-net:
+    name: poc-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.40.0.0/24
+
